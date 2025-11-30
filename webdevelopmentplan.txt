@@ -1,0 +1,143 @@
+Yeti Routes: Web Development Plan & Technical Architecture
+
+Target: Building a high-performance, multi-language Himalayan Travel Platform.
+
+1. Technology Stack
+
+Frontend (The "Vibe" & Performance)
+
+Core: HTML5, Modern JavaScript (ES6+).
+
+Styling: Tailwind CSS (Utility-first for rapid, responsive design).
+
+Templating: PHP native templating (keeping it simple and fast, or Blade/Twig if using a framework).
+
+Libraries:
+
+Alpine.js: For lightweight interactions (dropdowns, modals, permit wizard logic).
+
+Chart.js: For the Acclimatization/Elevation Graph.
+
+Swiper.js: For the touch-friendly photo galleries.
+
+Mapbox GL / Google Maps API: For 2D/3D route maps.
+
+Backend (The Logic)
+
+Language: PHP 8.2+ (Strict typing recommended).
+
+Database: MySQL 8.0 (Using the V17 Schema).
+
+Architecture: MVC (Model-View-Controller) Pattern.
+
+Security: PDO for all database queries.
+
+2. Backend Development Roadmap
+
+Phase 1: Core Engine & Database
+
+Database Connection: Create a singleton Database class using PDO.
+
+Model Generation: Create PHP classes for Route, Booking, User that map to the V17 tables.
+
+Authentication System: Implement Login/Register with password_hash() and Session management (user_sessions table).
+
+Phase 2: The "Digital Sherpa" Logic (Key Features)
+
+Permit Logic Service: Create a service that takes (route_id, nationality) and queries the permits table JSON rules to return a cost.
+
+Localization Middleware:
+
+Check URL (e.g., yetiroutes.com/fr/...) or Session.
+
+If language is NOT English, query content_translations.
+
+Logic: If translation exists, overwrite the English title with the French title.
+
+Media Manager: A script to handle image uploads, resize them (Large/Thumb), and create entries in media_library.
+
+Phase 3: Booking & Payments
+
+Booking Controller: Validate availability in departures table.
+
+Snapshot Logic: When a booking is created, copy the current prices into booking_line_items (Critical for financial integrity).
+
+Payment Gateway: Integrate Stripe/Himalayan Bank API. On success, update payment_status in bookings and booking_payments.
+
+3. Frontend Development Roadmap
+
+A. Global Components (The "Shell")
+
+Sticky Header: Logo, Navigation, Language Selector (Flag Icon), "Book Now" CTA.
+
+Footer: Trust Badges, "Recent Views" list (powered by user_view_history), Newsletter Form.
+
+B. Page-Specific Builds
+
+Homepage:
+
+Hero Video/Slider.
+
+"Find Your Trek" Filter (Duration, Difficulty).
+
+"Featured Treks" Grid (Query is_featured=1).
+
+Route Detail Page (The Conversion Engine):
+
+Hero: Full-width image + Key Stats (Altitude, Days).
+
+Tabs: Overview | Itinerary | Dates & Price | Gear.
+
+Interactive Graph: Canvas element rendering the overnight_altitude_meters data.
+
+Sidebar: Sticky "Book This Trek" card with Price and "Split Payment" toggle.
+
+The "Digital Tools" Pages:
+
+Permit Wizard: A multi-step form (Nationality -> Trek -> Date).
+
+Gear Locker: A grid of rental items with "Add to Cart" functionality.
+
+4. Multi-Language Implementation Strategy
+
+URL Structure:
+
+Default (English): yetiroutes.com/everest-base-camp
+
+French: yetiroutes.com/fr/everest-base-camp
+
+German: yetiroutes.com/de/everest-base-camp
+
+How it works in Code:
+
+// Pseudo-code for Route Controller
+$lang = $_GET['lang'] ?? 'en';
+$route = $db->query("SELECT * FROM routes WHERE slug = ?", [$slug]);
+
+if ($lang !== 'en') {
+    // Fetch translations for this route
+    $translations = $db->query(
+        "SELECT field_name, translation_value FROM content_translations 
+         WHERE entity_type = 'route' AND entity_id = ? AND language_code = ?", 
+        [$route->id, $lang]
+    );
+    
+    // Overlay translations
+    foreach ($translations as $t) {
+        $route->{$t->field_name} = $t->translation_value;
+    }
+}
+
+// Now $route->title contains the French title if available
+return view('route_detail', ['route' => $route]);
+
+
+5. Security & Deployment Checklist
+
+SSL Certificate: Mandatory for payments.
+
+Server Config: Disable directory listing.
+
+Database User: Create a specific DB user with privileges ONLY for the yetiroutes database (not root).
+
+Backups: Automate daily SQL dumps.
