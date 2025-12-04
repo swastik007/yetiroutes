@@ -120,6 +120,9 @@ class Router
         $this->get('/admin/routes', 'RouteController', 'index');
         $this->get('/admin/routes/create', 'RouteController', 'create');
         $this->post('/admin/routes/store', 'RouteController', 'store');
+        $this->get('/admin/routes/edit', 'RouteController', 'edit');
+        $this->post('/admin/routes/update', 'RouteController', 'update');
+        $this->post('/admin/routes/delete', 'RouteController', 'delete');
 
         // Users Management
         $this->get('/admin/users', 'UserController', 'index');
@@ -129,14 +132,74 @@ class Router
 
         // Locations Management
         $this->get('/admin/locations', 'LocationController', 'index');
+        $this->post('/admin/locations/store', 'LocationController', 'store');
 
         // Blog Management
         $this->get('/admin/blog', 'BlogController', 'index');
+        $this->get('/admin/blog/create', 'BlogController', 'create');
+        $this->post('/admin/blog/store', 'BlogController', 'store');
+        $this->get('/admin/blog/edit', 'BlogController', 'edit');
+        $this->post('/admin/blog/update', 'BlogController', 'update');
+        $this->post('/admin/blog/delete', 'BlogController', 'delete');
 
         // Media Library
         $this->get('/admin/media', 'MediaController', 'index');
+        $this->post('/admin/media/upload', 'MediaController', 'upload');
+        $this->post('/admin/media/delete', 'MediaController', 'delete');
 
-        // Frontend Routes
+        // Activities Management
+        $this->get('/admin/activities', 'ActivityController', 'adminIndex');
+        $this->get('/admin/activities/create', 'ActivityController', 'adminCreate');
+        $this->post('/admin/activities/store', 'ActivityController', 'adminStore');
+        $this->get('/admin/activities/edit', 'ActivityController', 'adminEdit');
+        $this->post('/admin/activities/update', 'ActivityController', 'adminUpdate');
+        $this->post('/admin/activities/delete', 'ActivityController', 'adminDelete');
+        $this->post('/admin/activities/toggle-featured', 'ActivityController', 'adminToggleFeatured');
+        $this->post('/admin/activities/toggle-active', 'ActivityController', 'adminToggleActive');
+
+        // ============================================
+        // FRONTEND ROUTES
+        // ============================================
+
+        // Homepage
         $this->get('/', 'HomeController', 'index');
+
+        // Trek Listing & Detail
+        $this->get('/treks', 'TrekController', 'index');
+        $this->get('/trek', 'TrekController', 'show'); // /trek?slug=everest-base-camp
+
+        // Region-specific
+        $this->get('/treks/everest', 'TrekController', 'region');
+        $this->get('/treks/annapurna', 'TrekController', 'region');
+        $this->get('/treks/langtang', 'TrekController', 'region');
+        $this->get('/treks/manaslu', 'TrekController', 'region');
+
+        // Activities
+        $this->get('/activities', 'ActivityController', 'index');
+        $this->get('/activity', 'ActivityController', 'show'); // /activity?slug=mountain-cycling
+
+        // Static Pages
+        $this->get('/about', 'PageController', 'about');
+        $this->get('/guides', 'PageController', 'guides');
+        $this->get('/contact', 'ContactController', 'index');
+        $this->post('/contact/submit', 'ContactController', 'submit');
+
+        // Admin: Inquiries Management
+        $this->get('/admin/inquiries', 'ContactController', 'admin');
+        $this->post('/admin/inquiries/update-status', 'ContactController', 'updateStatus');
+
+        // Blog
+        $this->get('/blog', 'BlogController', 'frontendIndex');
+        $this->get('/blog/article', 'BlogController', 'show'); // /blog/article?slug=post-slug
+        $this->post('/blog/track-view', 'BlogController', 'trackView');
+
+        // Travel Info
+        $this->get('/travel-info', 'PageController', 'travelInfo');
+
+        // Policy Pages
+        $this->get('/terms', 'PageController', 'terms');
+        $this->get('/privacy', 'PageController', 'privacy');
+        $this->get('/refund-policy', 'PageController', 'refund');
+        $this->get('/cancellation-policy', 'PageController', 'cancellation');
     }
 }

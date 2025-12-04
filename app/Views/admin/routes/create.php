@@ -12,7 +12,7 @@ ob_start();
 <div class="bg-white rounded-lg shadow p-6">
     <h2 class="text-2xl font-bold text-gray-900 mb-6">Create New Route</h2>
 
-    <form action="/admin/routes/store" method="POST" class="space-y-6">
+    <form action="/admin/routes/store" method="POST" enctype="multipart/form-data" class="space-y-6">
         <input type="hidden" name="csrf_token" value="<?= $csrf_token ?>">
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -101,6 +101,14 @@ ob_start();
                 <label class="block text-sm font-medium text-gray-700 mb-2">Meta Description (SEO)</label>
                 <input type="text" name="meta_description"
                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Featured Image Upload -->
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Featured Image</label>
+                <input type="file" name="featured_image" accept="image/*"
+                       class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <p class="text-xs text-gray-500 mt-1">Recommended: 1200x800px, JPG/PNG, max 2MB</p>
             </div>
 
             <!-- Checkboxes -->

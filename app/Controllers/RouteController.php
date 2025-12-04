@@ -60,6 +60,34 @@ class RouteController extends Controller
             $this->redirect('/admin/routes/create');
         }
 
+        // Process highlights, inclusions, exclusions from textarea
+        $highlights = !empty($_POST['highlights'])
+            ? array_filter(array_map('trim', explode("\n", $_POST['highlights'])))
+            : [];
+        $inclusions = !empty($_POST['inclusions'])
+            ? array_filter(array_map('trim', explode("\n", $_POST['inclusions'])))
+            : [];
+        $exclusions = !empty($_POST['exclusions'])
+            ? array_filter(array_map('trim', explode("\n", $_POST['exclusions'])))
+            : [];
+
+        // Handle featured image upload
+        $featuredImagePath = null;
+        if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] === 0) {
+            $uploadDir = 'uploads/routes/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $extension = pathinfo($_FILES['featured_image']['name'], PATHINFO_EXTENSION);
+            $filename = time() . '_' . uniqid() . '.' . $extension;
+            $targetPath = $uploadDir . $filename;
+
+            if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $targetPath)) {
+                $featuredImagePath = '/' . $targetPath;
+            }
+        }
+
         $data = [
             'location_id' => $_POST['location_id'] ?? 0,
             'title' => $_POST['title'] ?? '',
@@ -74,9 +102,10 @@ class RouteController extends Controller
             'currency' => $_POST['currency'] ?? 'USD',
             'short_description' => $_POST['short_description'] ?? '',
             'full_description' => $_POST['full_description'] ?? '',
-            'highlights' => json_encode($_POST['highlights'] ?? []),
-            'inclusions' => json_encode($_POST['inclusions'] ?? []),
-            'exclusions' => json_encode($_POST['exclusions'] ?? []),
+            'highlights' => json_encode($highlights),
+            'inclusions' => json_encode($inclusions),
+            'exclusions' => json_encode($exclusions),
+            'featured_image_path' => $featuredImagePath,
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
             'is_active' => isset($_POST['is_active']) ? 1 : 0,
             'meta_title' => $_POST['meta_title'] ?? '',
@@ -132,6 +161,17 @@ class RouteController extends Controller
 
         $id = $_POST['id'] ?? 0;
 
+        // Process highlights, inclusions, exclusions from textarea
+        $highlights = !empty($_POST['highlights'])
+            ? array_filter(array_map('trim', explode("\n", $_POST['highlights'])))
+            : [];
+        $inclusions = !empty($_POST['inclusions'])
+            ? array_filter(array_map('trim', explode("\n", $_POST['inclusions'])))
+            : [];
+        $exclusions = !empty($_POST['exclusions'])
+            ? array_filter(array_map('trim', explode("\n", $_POST['exclusions'])))
+            : [];
+
         $data = [
             'location_id' => $_POST['location_id'] ?? 0,
             'title' => $_POST['title'] ?? '',
@@ -139,12 +179,35 @@ class RouteController extends Controller
             'duration_days' => $_POST['duration_days'] ?? 0,
             'max_altitude_meters' => $_POST['max_altitude_meters'] ?? null,
             'best_season' => $_POST['best_season'] ?? '',
+            'terrain_type' => $_POST['terrain_type'] ?? 'mixed',
+            'fitness_score_required' => $_POST['fitness_score_required'] ?? 5,
             'base_price' => $_POST['base_price'] ?? 0,
             'short_description' => $_POST['short_description'] ?? '',
             'full_description' => $_POST['full_description'] ?? '',
+            'highlights' => json_encode($highlights),
+            'inclusions' => json_encode($inclusions),
+            'exclusions' => json_encode($exclusions),
+            'meta_title' => $_POST['meta_title'] ?? '',
+            'meta_description' => $_POST['meta_description'] ?? '',
             'is_featured' => isset($_POST['is_featured']) ? 1 : 0,
             'is_active' => isset($_POST['is_active']) ? 1 : 0
         ];
+
+        // Handle new featured image upload
+        if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] === 0) {
+            $uploadDir = 'uploads/routes/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0755, true);
+            }
+
+            $extension = pathinfo($_FILES['featured_image']['name'], PATHINFO_EXTENSION);
+            $filename = time() . '_' . uniqid() . '.' . $extension;
+            $targetPath = $uploadDir . $filename;
+
+            if (move_uploaded_file($_FILES['featured_image']['tmp_name'], $targetPath)) {
+                $data['featured_image_path'] = '/' . $targetPath;
+            }
+        }
 
         if ($this->routeModel->update((int)$id, $data)) {
             $_SESSION['success'] = 'Route updated successfully!';

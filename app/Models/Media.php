@@ -8,8 +8,8 @@ class Media extends Model
 {
     protected string $table = 'media_library';
     protected array $fillable = [
-        'filename', 'original_path', 'variants', 'mime_type',
-        'alt_text', 'uploaded_by', 'visibility'
+        'filename', 'original_path', 'variants',
+        'mime_type', 'alt_text', 'uploaded_by', 'visibility'
     ];
 
     /**

@@ -9,7 +9,7 @@ class Location extends Model
     protected string $table = 'locations';
     protected array $fillable = [
         'parent_id', 'name', 'slug', 'latitude', 'longitude',
-        'media_id', 'meta_title', 'meta_description'
+        'media_id', 'meta_title', 'meta_description', 'featured_image_path'
     ];
 
     /**
@@ -17,7 +17,8 @@ class Location extends Model
      */
     public function getAllWithParent(): array
     {
-        $sql = "SELECT l.*, p.name as parent_name
+        $sql = "SELECT l.*, p.name as parent_name,
+                       (SELECT COUNT(*) FROM routes r WHERE r.location_id = l.id) as route_count
                 FROM {$this->table} l
                 LEFT JOIN locations p ON l.parent_id = p.id
                 ORDER BY l.name ASC";

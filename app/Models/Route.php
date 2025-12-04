@@ -9,12 +9,12 @@ class Route extends Model
     protected string $table = 'routes';
     protected array $fillable = [
         'location_id', 'media_id', 'title', 'slug', 'difficulty',
-        'duration_days', 'max_altitude_meters', 'best_season', 'terrain_type',
+        'duration_days', 'max_altitude_meters', 'best_season', 'terrain_type', 'route_type',
         'fitness_score_required', 'carbon_footprint_kg', 'base_price', 'currency',
         'price_transparency_data', 'short_description', 'full_description',
         'highlights', 'inclusions', 'exclusions', 'emergency_contact_info',
         'nearest_hospital', 'is_featured', 'video_url', 'map_embed_code',
-        'map_3d_url', 'meta_title', 'meta_description', 'is_active'
+        'map_3d_url', 'meta_title', 'meta_description', 'is_active', 'featured_image_path'
     ];
 
     /**
@@ -108,5 +108,67 @@ class Route extends Model
         $sql .= " ORDER BY r.is_featured DESC, r.created_at DESC";
 
         return $this->query($sql, $params);
+    }
+
+    /**
+     * Get routes by type (trek, tour, expedition, day_trip)
+     */
+    public function getByType(string $type, int $limit = 10): array
+    {
+        $sql = "SELECT r.*, l.name as location_name
+                FROM {$this->table} r
+                LEFT JOIN locations l ON r.location_id = l.id
+                WHERE r.route_type = :type AND r.is_active = 1
+                ORDER BY r.is_featured DESC, r.created_at DESC
+                LIMIT {$limit}";
+
+        return $this->query($sql, ['type' => $type]);
+    }
+
+    /**
+     * Get featured routes by type
+     */
+    public function getFeaturedByType(string $type, int $limit = 6): array
+    {
+        $sql = "SELECT r.*, l.name as location_name
+                FROM {$this->table} r
+                LEFT JOIN locations l ON r.location_id = l.id
+                WHERE r.route_type = :type AND r.is_featured = 1 AND r.is_active = 1
+                ORDER BY r.id DESC
+                LIMIT {$limit}";
+
+        return $this->query($sql, ['type' => $type]);
+    }
+
+    /**
+     * Get treks (convenience method)
+     */
+    public function getTreks(int $limit = 10): array
+    {
+        return $this->getByType('trek', $limit);
+    }
+
+    /**
+     * Get tours (convenience method)
+     */
+    public function getTours(int $limit = 10): array
+    {
+        return $this->getByType('tour', $limit);
+    }
+
+    /**
+     * Get expeditions (convenience method)
+     */
+    public function getExpeditions(int $limit = 10): array
+    {
+        return $this->getByType('expedition', $limit);
+    }
+
+    /**
+     * Get day trips (convenience method)
+     */
+    public function getDayTrips(int $limit = 10): array
+    {
+        return $this->getByType('day_trip', $limit);
     }
 }

@@ -25,6 +25,7 @@ class LocationController extends Controller
 
         $this->view('admin.locations.index', [
             'locations' => $locations,
+            'csrf_token' => $this->generateCsrf(),
             'current_user' => $this->getCurrentUser()
         ]);
     }

@@ -31,9 +31,9 @@ class BookingController extends Controller
     }
 
     /**
-     * View booking details
+     * Show booking details
      */
-    public function view(): void
+    public function show(): void
     {
         $this->requireAuth();
 
