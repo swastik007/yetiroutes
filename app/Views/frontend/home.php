@@ -463,161 +463,158 @@ ob_start();
         <div class="absolute top-1/4 right-0 w-96 h-96 bg-brand-lime/10 rounded-full blur-[128px] pointer-events-none"></div>
     </section>
      <!-- Most Popular Tours Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <section class="py-24 bg-white overflow-hidden">
+    <div class="container mx-auto px-4">
 
-        <div class="mb-10">
-            <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 leading-tight">
-                Our most <br> popular tours
-            </h2>
-            <div class="h-1 w-20 bg-brand-gold mt-6"></div>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div class="max-w-2xl">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="w-8 h-[2px] bg-brand-lime"></span>
+                    <span class="text-brand-lime font-bold text-sm uppercase tracking-[0.2em]">Top Rated Experiences</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 leading-tight mb-4">
+                    Popular Tours in Nepal
+                </h2>
+                <p class="text-lg text-slate-600">
+                    Handpicked itineraries that offer the perfect blend of adventure, culture, and breathtaking scenery. These are the journeys our travelers love the most.
+                </p>
+            </div>
+            
+            <div class="flex gap-3">
+                <button id="tours-scroll-left" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 group">
+                    <i class="ri-arrow-left-line text-xl group-hover:-translate-x-1 transition-transform"></i>
+                </button>
+                <button id="tours-scroll-right" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 group">
+                    <i class="ri-arrow-right-line text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
         </div>
 
-        <!-- Scrollable Carousel Wrapper -->
-        <div class="relative">
-            <!-- Navigation Buttons -->
-            <button id="tours-scroll-left" class="absolute -left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-brand-teal text-white rounded-full flex items-center justify-center hover:bg-opacity-80 transition shadow-xl">
-                <i class="ri-arrow-left-s-line text-2xl"></i>
-            </button>
-            <button id="tours-scroll-right" class="absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-brand-teal text-white rounded-full flex items-center justify-center hover:bg-opacity-80 transition shadow-xl">
-                <i class="ri-arrow-right-s-line text-2xl"></i>
-            </button>
-
-            <!-- Scrollable Container -->
-            <div id="tours-carousel" class="overflow-x-auto scrollbar-hide scroll-smooth pb-8" style="scrollbar-width: none; -ms-overflow-style: none;">
+        <div class="relative -mx-4 px-4 md:mx-0 md:px-0">
+            <div id="tours-carousel" class="overflow-x-auto scrollbar-hide scroll-smooth pb-12" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <div class="flex gap-6" style="width: max-content;">
 
                     <?php if (isset($tour_routes) && !empty($tour_routes)): ?>
                         <?php foreach ($tour_routes as $tour): ?>
-                            <div class="group relative h-[480px] w-[320px] flex-shrink-0 rounded-lg overflow-hidden cursor-pointer shadow-lg snap-center">
-                                <?php
-                                // Fallback images based on location name
-                                $tourImages = [
-                                    'everest' => 'photo-1544735716-392fe2489ffa',
-                                    'annapurna' => 'photo-1590416972823-74d3d4999719',
-                                    'langtang' => 'photo-1625505826533-5c80aca7d157',
-                                    'manaslu' => 'photo-1464822759023-fed622ff2c3b',
-                                    'mustang' => 'photo-1526487999127-d04b39a38f6c',
-                                    'chitwan' => 'photo-1579549392258-005d5d36e2f1',
-                                    'default' => 'photo-1506905925346-21bda4d32df4'
-                                ];
+                            
+                            <?php
+                            // Logic setup
+                            $tourImages = [
+                                'everest' => 'photo-1544735716-392fe2489ffa',
+                                'annapurna' => 'photo-1590416972823-74d3d4999719',
+                                'langtang' => 'photo-1625505826533-5c80aca7d157',
+                                'manaslu' => 'photo-1464822759023-fed622ff2c3b',
+                                'mustang' => 'photo-1526487999127-d04b39a38f6c',
+                                'chitwan' => 'photo-1579549392258-005d5d36e2f1',
+                                'default' => 'photo-1506905925346-21bda4d32df4'
+                            ];
+                            $locationKey = strtolower($tour->location_name ?? 'default');
+                            $imageId = $tourImages[$locationKey] ?? $tourImages['default'];
+                            $imageUrl = "https://images.unsplash.com/{$imageId}?w=600&q=80&fit=crop";
+                            
+                            $isDayTrip = ($tour->route_type === 'day_trip');
+                            $badgeText = $isDayTrip ? 'Day Trip' : ucfirst($tour->route_type);
+                            $badgeClass = $isDayTrip ? 'bg-orange-500' : 'bg-brand-lime';
+                            ?>
 
-                                $locationKey = strtolower($tour->location_name ?? 'default');
-                                $imageId = $tourImages[$locationKey] ?? $tourImages['default'];
-                                $imageUrl = "https://images.unsplash.com/{$imageId}?w=800";
-                                ?>
+                            <div class="group relative h-[500px] w-[300px] md:w-[350px] flex-shrink-0 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-500 snap-center">
+                                
+                                <img src="<?= htmlspecialchars($imageUrl) ?>" 
+                                     alt="<?= htmlspecialchars($tour->title) ?>" 
+                                     class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
 
-                                <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($tour->title) ?>" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-
-                                <!-- Route Type Badge -->
-                                <div class="absolute top-4 right-4 z-10">
-                                    <?php
-                                    $badgeText = ($tour->route_type === 'day_trip') ? 'Day Trip' : ucfirst($tour->route_type);
-                                    $badgeColor = ($tour->route_type === 'day_trip') ? 'bg-orange-500' : 'bg-blue-500';
-                                    ?>
-                                    <span class="<?= $badgeColor ?> text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg backdrop-blur-sm">
+                                <div class="absolute top-5 right-5 z-20">
+                                    <span class="<?= $badgeClass ?> text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
                                         <?= htmlspecialchars($badgeText) ?>
                                     </span>
                                 </div>
 
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent transition-opacity duration-300 group-hover:opacity-0">
-                                    <div class="absolute bottom-0 left-0 p-6 w-full text-white">
-                                        <h3 class="text-2xl font-serif font-bold mb-1"><?= htmlspecialchars($tour->title) ?></h3>
-                                        <p class="text-sm font-sans opacity-90"><?= htmlspecialchars($tour->duration_days ?? 'N/A') ?> Days</p>
-                                    </div>
-                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-500"></div>
 
-                                <div class="absolute inset-0 bg-brand-teal opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-8 text-white">
-                                    <div>
-                                        <h3 class="text-2xl font-serif font-bold mb-6"><?= htmlspecialchars($tour->title) ?></h3>
+                                <div class="absolute bottom-0 left-0 w-full p-8 flex flex-col justify-end h-full">
+                                    
+                                    <div class="transform translate-y-12 group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                                        
+                                        <h3 class="text-2xl font-bold text-white leading-tight mb-2 font-serif">
+                                            <?= htmlspecialchars($tour->title) ?>
+                                        </h3>
 
-                                        <div class="flex justify-between items-center text-sm border-b border-white/20 pb-4 mb-4 font-sans">
-                                            <span><?= htmlspecialchars($tour->duration_days ?? 'N/A') ?> days</span>
-                                            <span class="font-bold">From $<?= number_format($tour->base_price ?? 0) ?></span>
+                                        <div class="flex items-center gap-4 text-white/90 text-sm font-medium mb-4">
+                                            <div class="flex items-center gap-1.5">
+                                                <i class="ri-time-line text-brand-lime"></i>
+                                                <span><?= htmlspecialchars($tour->duration_days ?? '1') ?> Days</span>
+                                            </div>
+                                            <div class="w-1 h-1 bg-white/50 rounded-full"></div>
+                                            <div class="flex items-center gap-1.5">
+                                                <i class="ri-money-dollar-circle-line text-brand-lime"></i>
+                                                <span>From $<?= number_format($tour->base_price ?? 0) ?></span>
+                                            </div>
                                         </div>
 
-                                        <p class="text-sm leading-relaxed text-gray-200 font-sans line-clamp-4">
-                                            <?= htmlspecialchars($tour->short_description ?? 'Discover the beauty of the Himalayas on this incredible adventure.') ?>
-                                        </p>
+                                        <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                                            <div class="h-px w-full bg-white/20 mb-4"></div>
+                                            <p class="text-gray-300 text-sm leading-relaxed line-clamp-3 mb-6">
+                                                <?= htmlspecialchars($tour->short_description ?? 'Embark on an unforgettable journey through the heart of the Himalayas.') ?>
+                                            </p>
+                                            
+                                            <a href="/trek?slug=<?= htmlspecialchars($tour->slug) ?>" class="inline-flex items-center gap-2 text-brand-lime font-bold uppercase text-xs tracking-widest hover:text-white transition-colors">
+                                                View Details <i class="ri-arrow-right-line"></i>
+                                            </a>
+                                        </div>
                                     </div>
-
-                                    <a href="/trek?slug=<?= htmlspecialchars($tour->slug) ?>" class="flex items-center gap-2 text-sm font-bold tracking-wide uppercase group-hover:translate-x-2 transition-transform duration-300">
-                                        View tour
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                        </svg>
-                                    </a>
                                 </div>
                             </div>
+
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <div class="w-full text-center py-12">
-                            <p class="text-gray-600 text-lg">No tours available at the moment. Check back soon!</p>
+                        <div class="w-full text-center py-12 px-4 border-2 border-dashed border-slate-200 rounded-3xl">
+                            <i class="ri-map-pin-time-line text-4xl text-slate-300 mb-2"></i>
+                            <p class="text-slate-500">No tours available at the moment.</p>
                         </div>
                     <?php endif; ?>
 
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Slider JavaScript -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const carousel = document.getElementById('tours-carousel');
-                const scrollLeft = document.getElementById('tours-scroll-left');
-                const scrollRight = document.getElementById('tours-scroll-right');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.getElementById('tours-carousel');
+            const scrollLeft = document.getElementById('tours-scroll-left');
+            const scrollRight = document.getElementById('tours-scroll-right');
 
-                if (carousel && scrollLeft && scrollRight) {
-                    const scrollAmount = 700;
+            if (carousel && scrollLeft && scrollRight) {
+                const scrollAmount = 370; // Adjusted for card width + gap
 
-                    scrollRight.addEventListener('click', () => {
-                        carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                    });
+                scrollRight.addEventListener('click', () => {
+                    carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
 
-                    scrollLeft.addEventListener('click', () => {
-                        carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                    });
-
-                    function updateButtons() {
-                        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-
-                        if (carousel.scrollLeft <= 0) {
-                            scrollLeft.style.opacity = '0.5';
-                            scrollLeft.style.pointerEvents = 'none';
-                        } else {
-                            scrollLeft.style.opacity = '1';
-                            scrollLeft.style.pointerEvents = 'auto';
-                        }
-
-                        if (carousel.scrollLeft >= maxScroll - 10) {
-                            scrollRight.style.opacity = '0.5';
-                            scrollRight.style.pointerEvents = 'none';
-                        } else {
-                            scrollRight.style.opacity = '1';
-                            scrollRight.style.pointerEvents = 'auto';
-                        }
-                    }
-
-                    carousel.addEventListener('scroll', updateButtons);
-                    updateButtons();
+                scrollLeft.addEventListener('click', () => {
+                    carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+                
+                // Optional: Hide buttons if content fits
+                function checkScroll() {
+                   if (carousel.scrollWidth <= carousel.clientWidth) {
+                       scrollLeft.style.display = 'none';
+                       scrollRight.style.display = 'none';
+                   }
                 }
-            });
-        </script>
-
-        <style>
-            #tours-carousel::-webkit-scrollbar {
-                display: none;
+                checkScroll();
             }
+        });
+    </script>
 
-            @media (max-width: 768px) {
-                #tours-carousel {
-                    scroll-snap-type: x mandatory;
-                }
-                #tours-carousel > div > div {
-                    scroll-snap-align: start;
-                }
-            }
-        </style>
-    </section>
+    <style>
+        #tours-carousel::-webkit-scrollbar { display: none; }
+        @media (max-width: 768px) {
+            #tours-carousel { scroll-snap-type: x mandatory; }
+            #tours-carousel > div > div { scroll-snap-align: center; }
+        }
+    </style>
+</section>
     <!-- Dream Vacation Section -->
       <section class="relative py-24 bg-yellow-50 overflow-hidden">
         <!-- Dotted Background Pattern -->
@@ -673,7 +670,7 @@ ob_start();
         <div class="flex flex-wrap lg:flex-nowrap gap-12 xl:gap-16">
 
             <div class="w-full lg:w-4/12 xl:w-3/12 hidden lg:block">
-                <div class="sticky top-24">
+                <div class="sticky top-5">
                     <div class="relative rounded-[2rem] overflow-hidden shadow-2xl group h-[600px]">
                         <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=800&q=80" 
                              alt="Trekker in the Himalayas" 
@@ -706,6 +703,10 @@ ob_start();
                         <h2 class="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
                             Explore Activities
                         </h2>
+                        <p class="leading-relaxed text-gray-800">Lifelong Memories<br/>
+Just A Few Days Away<br/>
+Experience the thrill of the Himalayas with our expertly curated adventures. From challenging treks to serene nature walks, we offer unforgettable journeys that create memories to last a lifetime.
+<p>
                     </div>
                     <a href="/activities" class="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-brand-lime transition-colors">
                         View All <i class="ri-arrow-right-line"></i>
@@ -779,97 +780,7 @@ ob_start();
         </div>
     </div>
 </section>
-    <section class="relative py-24 bg-white overflow-hidden">
-        <!-- Dotted Background Pattern -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, #000 1px, transparent 1px); background-size: 20px 20px;"></div>
-
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-                <!-- Left Side - Image -->
-                <div class="relative">
-                    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?w=800" alt="Trekker in the Himalayas" class="w-full h-[600px] object-cover">
-
-                        <!-- Floating Badge -->
-                        <div class="absolute top-8 right-8 bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-xl">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-brand-lime rounded-full flex items-center justify-center">
-                                    <i class="ri-star-fill text-black text-xl"></i>
-                                </div>
-                                <div>
-                                    <div class="text-2xl font-bold text-black">4.9/5</div>
-                                    <div class="text-sm text-gray-600">1000+ Reviews</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Side - Content -->
-                <div>
-                    <span class="text-brand-lime font-semibold text-lg">DISCOVER ADVENTURE</span>
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-4 mb-6 leading-tight">
-                    Lifelong Memories <br> Just A Few Days Away
-                </h2>
-                    <p class="text-gray-600 text-lg mb-10 leading-relaxed">
-                        Experience the thrill of the Himalayas with our expertly curated adventures. From challenging treks to serene nature walks, we offer unforgettable journeys that create memories to last a lifetime.
-                    </p>
-
-                    <!-- Activities Grid -->
-                    <div class="space-y-6">
-                        <!-- Trekking -->
-                        <div class="group flex items-start gap-6 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-brand-lime/50 transition duration-300">
-                            <div class="flex-shrink-0">
-                                <div class="w-16 h-16 bg-brand-lime/10 rounded-2xl flex items-center justify-center group-hover:bg-brand-lime/20 transition duration-300">
-                                    <i class="ri-mountain-line text-3xl text-brand-lime"></i>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-black mb-2">Mountain Trekking</h3>
-                                <p class="text-gray-600">Explore the majestic Himalayan trails with experienced guides. From beginner-friendly routes to challenging high-altitude expeditions.</p>
-                            </div>
-                        </div>
-
-                        <!-- Rafting -->
-                        <div class="group flex items-start gap-6 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-brand-lime/50 transition duration-300">
-                            <div class="flex-shrink-0">
-                                <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center group-hover:bg-blue-500/20 transition duration-300">
-                                    <i class="ri-water-flash-line text-3xl text-blue-500"></i>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-black mb-2">River Rafting</h3>
-                                <p class="text-gray-600">Navigate thrilling rapids on Nepal's pristine rivers. Perfect for adventure seekers looking for an adrenaline-pumping experience.</p>
-                            </div>
-                        </div>
-
-                        <!-- Paragliding -->
-                        <div class="group flex items-start gap-6 bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:border-brand-lime/50 transition duration-300">
-                            <div class="flex-shrink-0">
-                                <div class="w-16 h-16 bg-purple-500/10 rounded-2xl flex items-center justify-center group-hover:bg-purple-500/20 transition duration-300">
-                                    <i class="ri-flight-takeoff-line text-3xl text-purple-500"></i>
-                                </div>
-                            </div>
-                            <div class="flex-1">
-                                <h3 class="text-xl font-bold text-black mb-2">Paragliding</h3>
-                                <p class="text-gray-600">Soar above the clouds with breathtaking aerial views of the Himalayas. Experience the ultimate freedom of flight in Pokhara.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CTA Button -->
-                    <div class="mt-10">
-                        <a href="/treks" class="group inline-flex items-center gap-3 bg-black text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-800 hover:-translate-y-1 transition transform duration-300">
-                        Explore All Activities
-                        <i class="ri-arrow-right-line group-hover:translate-x-1 transition"></i>
-                    </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
+   
 
     <!-- Testimonials Section -->
     <section class="py-16 bg-stone-100 text-stone-800 overflow-hidden">
