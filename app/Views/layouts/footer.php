@@ -67,8 +67,8 @@
                     <li class="flex items-start gap-3">
                         <i class="ri-phone-fill text-[#a3e635] text-lg mt-[-2px]"></i>
                         <div>
-                            <span class="block text-white font-medium">+977 9841 595962</span>
-                            <span class="block text-xs">+977 1 4004750</span>
+                            <span class="block text-white font-medium">+977 9843 183934</span>
+                            <span class="block text-xs">+977 9810 279272</span>
                         </div>
                     </li>
                     <li class="flex items-center gap-3">
