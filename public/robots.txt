@@ -1,0 +1,36 @@
+# Robots.txt for yetiroutes.com
+# Generated: 2026-01-02
+
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /chat/
+Disallow: /check-route-type.php
+Disallow: /test-tours.php
+Disallow: /run-migration.php
+Disallow: /check-tables.php
+
+# Allow specific resources
+Allow: /public/css/
+Allow: /public/js/
+Allow: /public/images/
+Allow: /images/
+
+# Sitemaps
+Sitemap: https://yetiroutes.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Block query parameter variations for cleaner indexing
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+
+# Search engines - no restrictions
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /

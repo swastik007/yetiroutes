@@ -12,6 +12,21 @@ abstract class Controller
      */
     protected function view(string $viewPath, array $data = []): void
     {
+        // Load Translations
+        $lang = $_GET['lang'] ?? 'en';
+        $transFile = BASE_PATH . "/app/Lang/{$lang}.php";
+        $translations = [];
+        if (file_exists($transFile)) {
+            $translations = require $transFile;
+        }
+
+        // Merge translations into data
+        // We use 'trans' key, but also extract so $trans is available directly if needed, 
+        // though $data keys conflict with $trans array keys if not careful.
+        // Safer to just provide $trans.
+        $data['trans'] = $translations;
+        $data['langPrefix'] = ($lang !== 'en') ? '/' . $lang : '';
+
         extract($data);
 
         $viewFile = BASE_PATH . '/app/Views/' . str_replace('.', '/', $viewPath) . '.php';

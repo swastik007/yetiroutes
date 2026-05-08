@@ -1,0 +1,20 @@
+# Prevent PHP execution in upload directories
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# Remove handlers for PHP files
+RemoveHandler .php .phtml .php3 .php4 .php5 .phps
+RemoveType .php .phtml .php3 .php4 .php5 .phps
+
+# Force download for script files (double safety)
+<FilesMatch "\.(php|phtml|php3|php4|php5|phps)$">
+    ForceType application/octet-stream
+    Header set Content-Disposition attachment
+</FilesMatch>

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php -l \"d:\\\\server\\\\yetiroutes\\\\app\\\\Views\\\\frontend\\\\regions\\\\everest.php\")",
+      "Bash(php -l \"d:\\\\server\\\\yetiroutes\\\\app\\\\Views\\\\frontend\\\\regions\\\\annapurna.php\")",
+      "Bash(php -l \"d:\\\\server\\\\yetiroutes\\\\app\\\\Views\\\\frontend\\\\regions\\\\langtang.php\")",
+      "Bash(php -l:*)",
+      "Bash(test:*)"
+    ]
+  }
+}

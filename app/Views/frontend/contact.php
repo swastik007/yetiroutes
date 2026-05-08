@@ -70,7 +70,7 @@ ob_start();
     <div class="container mx-auto px-6 relative z-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <a href="https://wa.me/9779841234567?text=Hi%2C%20I%27m%20interested%20in%20trekking%20in%20Nepal" target="_blank" class="dark-glass p-8 rounded-3xl group transition-all duration-500 reveal">
+            <a href="https://wa.me/9779843183934?text=Hi%2C%20I%27m%20interested%20in%20trekking%20in%20Nepal" target="_blank" class="dark-glass p-8 rounded-3xl group transition-all duration-500 reveal">
                 <div class="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center text-green-400 text-3xl mb-6 group-hover:scale-110 transition-transform">
                     <i class="fab fa-whatsapp"></i>
                 </div>
@@ -79,13 +79,13 @@ ob_start();
                 <span class="text-green-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">Chat Now <i class="fas fa-arrow-right"></i></span>
             </a>
 
-            <a href="tel:+9779841234567" class="dark-glass p-8 rounded-3xl group transition-all duration-500 reveal delay-100">
+            <a href="tel:+9779843183934" class="dark-glass p-8 rounded-3xl group transition-all duration-500 reveal delay-100">
                 <div class="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center text-blue-400 text-3xl mb-6 group-hover:rotate-12 transition-transform">
                     <i class="fas fa-phone-alt"></i>
                 </div>
                 <h3 class="text-white text-xl font-bold mb-2">Call Us</h3>
-                <p class="text-gray-400 text-sm mb-4">Mon-Sat, 9AM - 6PM</p>
-                <span class="text-blue-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">+977 984-1234567 <i class="fas fa-arrow-right"></i></span>
+                <p class="text-gray-400 text-sm mb-4">Mon-Sat, 9AM - 6PM NPT</p>
+                <span class="text-blue-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">+977 9843-183934 <i class="fas fa-arrow-right"></i></span>
             </a>
 
             <a href="mailto:info@yetiroutes.com" class="dark-glass p-8 rounded-3xl group transition-all duration-500 reveal delay-200">
@@ -94,7 +94,10 @@ ob_start();
                 </div>
                 <h3 class="text-white text-xl font-bold mb-2">Email</h3>
                 <p class="text-gray-400 text-sm mb-4">For detailed itineraries.</p>
-                <span class="text-purple-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">info@yetiroutes.com <i class="fas fa-arrow-right"></i></span>
+                <div class="flex flex-col gap-1">
+                    <span class="text-purple-400 text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all">info@yetiroutes.com <i class="fas fa-arrow-right"></i></span>
+                    <span class="text-purple-300 text-xs">yetiroutes@gmail.com</span>
+                </div>
             </a>
 
             <div class="dark-glass p-8 rounded-3xl group transition-all duration-500 reveal delay-300">

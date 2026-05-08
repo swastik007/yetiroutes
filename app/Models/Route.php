@@ -8,13 +8,36 @@ class Route extends Model
 {
     protected string $table = 'routes';
     protected array $fillable = [
-        'location_id', 'media_id', 'title', 'slug', 'difficulty',
-        'duration_days', 'max_altitude_meters', 'best_season', 'terrain_type', 'route_type',
-        'fitness_score_required', 'carbon_footprint_kg', 'base_price', 'currency',
-        'price_transparency_data', 'short_description', 'full_description',
-        'highlights', 'inclusions', 'exclusions', 'emergency_contact_info',
-        'nearest_hospital', 'is_featured', 'video_url', 'map_embed_code',
-        'map_3d_url', 'meta_title', 'meta_description', 'is_active', 'featured_image_path'
+        'location_id',
+        'media_id',
+        'title',
+        'slug',
+        'difficulty',
+        'duration_days',
+        'max_altitude_meters',
+        'best_season',
+        'terrain_type',
+        'route_type',
+        'fitness_score_required',
+        'carbon_footprint_kg',
+        'base_price',
+        'currency',
+        'price_transparency_data',
+        'short_description',
+        'full_description',
+        'highlights',
+        'inclusions',
+        'exclusions',
+        'emergency_contact_info',
+        'nearest_hospital',
+        'is_featured',
+        'video_url',
+        'map_embed_code',
+        'map_3d_url',
+        'meta_title',
+        'meta_description',
+        'is_active',
+        'featured_image_path'
     ];
 
     /**
@@ -89,6 +112,17 @@ class Route extends Model
                 WHERE r.is_active = 1";
 
         $params = [];
+
+        if (!empty($filters['types']) && is_array($filters['types'])) {
+            // Create placeholders for types
+            $placeholders = [];
+            foreach ($filters['types'] as $i => $type) {
+                $key = "type_$i";
+                $placeholders[] = ":$key";
+                $params[$key] = $type;
+            }
+            $sql .= " AND r.route_type IN (" . implode(',', $placeholders) . ")";
+        }
 
         if (!empty($filters['difficulty'])) {
             $sql .= " AND r.difficulty = :difficulty";

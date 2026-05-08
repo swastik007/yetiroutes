@@ -63,14 +63,13 @@ class ContactController extends Controller
             'name' => trim($_POST['name']),
             'email' => trim($_POST['email']),
             'phone' => trim($_POST['phone'] ?? ''),
-            'nationality' => trim($_POST['nationality'] ?? ''),
+            // 'nationality' removed
             'message' => trim($_POST['message']),
-            'inquiry_type' => 'contact_form',
+            'type' => 'general', // Mapped 'quick_inquiry' to 'general' as per schema
             'route_id' => null,
             'status' => 'new',
-            'source' => 'website',
             'ip_address' => $_SERVER['REMOTE_ADDR'] ?? null,
-            'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? null
+            // 'source' and 'user_agent' removed as they don't exist in schema
         ];
 
         // Add optional fields as metadata
@@ -113,7 +112,7 @@ class ContactController extends Controller
 
             echo json_encode([
                 'success' => false,
-                'message' => 'An error occurred. Please try contacting us via WhatsApp or email.'
+                'message' => 'Error: ' . $e->getMessage()
             ]);
         }
     }
@@ -124,14 +123,16 @@ class ContactController extends Controller
     private function sendNotificationEmail(array $data, array $metadata): void
     {
         // Email configuration
-        $to = 'info@yetiroutes.com';
+        $to = 'yetiroutes@gmail.com';
         $subject = 'New Contact Form Inquiry - Yeti Routes';
 
         $message = "New inquiry received from the website:\n\n";
         $message .= "Name: {$data['name']}\n";
         $message .= "Email: {$data['email']}\n";
         $message .= "Phone: {$data['phone']}\n";
-        $message .= "Nationality: {$data['nationality']}\n\n";
+        if (!empty($metadata['nationality'])) {
+            $message .= "Nationality: {$metadata['nationality']}\n\n";
+        }
 
         if (!empty($metadata['trek_interest'])) {
             $message .= "Trek Interest: {$metadata['trek_interest']}\n";
@@ -162,7 +163,7 @@ class ContactController extends Controller
     {
         $this->requireAuth();
 
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
         $perPage = 20;
 
         $filters = [
@@ -206,10 +207,8 @@ class ContactController extends Controller
         $userId = $_SESSION['user_id'] ?? null;
 
         $updated = $this->inquiryModel->update($inquiryId, [
-            'status' => $status,
-            'responded_at' => ($status === 'responded') ? date('Y-m-d H:i:s') : null,
-            'responded_by' => ($status === 'responded') ? $userId : null,
-            'response_notes' => $note
+            'status' => $status
+            // 'responded_at' => ... (Columns do not exist in current schema)
         ]);
 
         if ($updated) {

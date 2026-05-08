@@ -236,7 +236,7 @@ ob_start();
             <a href="/treks" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-full text-lg font-semibold transition">
                 <i class="fas fa-mountain mr-2"></i> View All Treks
             </a>
-            <a href="https://wa.me/9779841234567?text=Hi%2C%20I%27m%20interested%20in%20<?= urlencode($post->title) ?>" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition">
+            <a href="https://wa.me/9779843183934?text=Hi%2C%20I%27m%20interested%20in%20<?= urlencode($post->title) ?>" target="_blank" class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition">
                 <i class="fab fa-whatsapp mr-2"></i> WhatsApp Us
             </a>
         </div>

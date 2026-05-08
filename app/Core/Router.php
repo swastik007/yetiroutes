@@ -59,6 +59,22 @@ class Router
         }
         $requestUri = $requestUri ?: '/';
 
+        // Multi-language: Detect and strip prefix
+        // Usage: /fr/trek -> $_GET['lang']='fr', uri='/trek'
+        $supportedLangs = ['fr', 'de'];
+        $pattern = '#^/(' . implode('|', $supportedLangs) . ')(/|$)#';
+
+        if (preg_match($pattern, $requestUri, $matches)) {
+            $_GET['lang'] = $matches[1];
+            // Remove the lang prefix, keeping the rest
+            $requestUri = substr($requestUri, strlen($matches[1]) + 1); // +1 for slash
+            $requestUri = $requestUri ?: '/';
+        } else {
+            if (!isset($_GET['lang'])) {
+                $_GET['lang'] = 'en';
+            }
+        }
+
         // Load routes configuration
         $this->loadRoutes();
 
@@ -158,14 +174,29 @@ class Router
         $this->post('/admin/activities/toggle-active', 'ActivityController', 'adminToggleActive');
 
         // ============================================
+        // CHAT ROUTES - ADMIN
+        // ============================================
+        $this->get('/admin/chat', 'ChatController', 'adminList');
+        $this->get('/admin/chat/conversations', 'ChatController', 'adminConversations');
+        $this->get('/admin/chat/conversation', 'ChatController', 'adminConversation');
+        $this->post('/admin/chat/reply', 'ChatController', 'adminReply');
+        $this->post('/admin/chat/mark-read', 'ChatController', 'adminMarkRead');
+        $this->post('/admin/chat/resolve', 'ChatController', 'adminResolve');
+
+
+        // ============================================
         // FRONTEND ROUTES
         // ============================================
+
+        // Sitemap
+        $this->get('/sitemap.xml', 'SitemapController', 'index');
 
         // Homepage
         $this->get('/', 'HomeController', 'index');
 
         // Trek Listing & Detail
         $this->get('/treks', 'TrekController', 'index');
+        $this->get('/tours', 'TrekController', 'tours');
         $this->get('/trek', 'TrekController', 'show'); // /trek?slug=everest-base-camp
 
         // Region-specific
@@ -201,5 +232,14 @@ class Router
         $this->get('/privacy', 'PageController', 'privacy');
         $this->get('/refund-policy', 'PageController', 'refund');
         $this->get('/cancellation-policy', 'PageController', 'cancellation');
+
+        // ============================================
+        // CHAT ROUTES - FRONTEND (API)
+        // ============================================
+        $this->post('/chat/start', 'ChatController', 'start');
+        $this->post('/chat/send', 'ChatController', 'send');
+        $this->get('/chat/messages', 'ChatController', 'getMessages');
+        $this->post('/chat/end', 'ChatController', 'end');
+        $this->get('/chat/debug', 'ChatController', 'debug');
     }
 }

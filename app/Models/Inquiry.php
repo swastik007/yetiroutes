@@ -12,6 +12,18 @@ class Inquiry extends Model
 {
     protected string $table = 'inquiries';
 
+    protected array $fillable = [
+        'type',
+        'route_id',
+        'lodge_id',
+        'name',
+        'email',
+        'phone',
+        'message',
+        'status',
+        'ip_address'
+    ];
+
     /**
      * Get filtered inquiries with pagination
      */
@@ -27,10 +39,10 @@ class Inquiry extends Model
             $params['status'] = $filters['status'];
         }
 
-        // Filter by inquiry type
-        if (!empty($filters['inquiry_type'])) {
-            $conditions[] = 'inquiry_type = :inquiry_type';
-            $params['inquiry_type'] = $filters['inquiry_type'];
+        // Filter by type
+        if (!empty($filters['type'])) {
+            $conditions[] = 'type = :type';
+            $params['type'] = $filters['type'];
         }
 
         // Search in name, email, message
@@ -42,11 +54,9 @@ class Inquiry extends Model
         $where = implode(' AND ', $conditions);
 
         $sql = "SELECT i.*,
-                       r.title as route_title,
-                       u.name as responder_name
+                       r.title as route_title
                 FROM {$this->table} i
                 LEFT JOIN routes r ON i.route_id = r.id
-                LEFT JOIN users u ON i.responded_by = u.id
                 WHERE {$where}
                 ORDER BY i.created_at DESC
                 LIMIT :limit OFFSET :offset";
@@ -70,9 +80,9 @@ class Inquiry extends Model
             $params['status'] = $filters['status'];
         }
 
-        if (!empty($filters['inquiry_type'])) {
-            $conditions[] = 'inquiry_type = :inquiry_type';
-            $params['inquiry_type'] = $filters['inquiry_type'];
+        if (!empty($filters['type'])) {
+            $conditions[] = 'type = :type';
+            $params['type'] = $filters['type'];
         }
 
         if (!empty($filters['search'])) {
@@ -119,7 +129,7 @@ class Inquiry extends Model
                 FROM {$this->table}";
 
         $result = $this->query($sql);
-        return (array)($result[0] ?? []);
+        return (array) ($result[0] ?? []);
     }
 
     /**
@@ -159,7 +169,7 @@ class Inquiry extends Model
                 WHERE created_at >= DATE_SUB(CURDATE(), INTERVAL :days DAY)";
 
         $result = $this->query($sql, ['days' => $days]);
-        return (array)($result[0] ?? []);
+        return (array) ($result[0] ?? []);
     }
 
     /**
@@ -184,6 +194,6 @@ class Inquiry extends Model
                 AND created_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
 
         $result = $this->query($sql);
-        return (array)($result[0] ?? []);
+        return (array) ($result[0] ?? []);
     }
 }

@@ -25,7 +25,7 @@ class RouteController extends Controller
         $this->requireAuth();
 
         $page = $_GET['page'] ?? 1;
-        $routes = $this->routeModel->paginate(20, (int)$page);
+        $routes = $this->routeModel->paginate(20, (int) $page);
 
         $this->view('admin.routes.index', [
             'routes' => $routes,
@@ -131,7 +131,7 @@ class RouteController extends Controller
         $this->requireAuth();
 
         $id = $_GET['id'] ?? 0;
-        $route = $this->routeModel->find((int)$id);
+        $route = $this->routeModel->find((int) $id);
 
         if (!$route) {
             $_SESSION['error'] = 'Route not found';
@@ -209,8 +209,23 @@ class RouteController extends Controller
             }
         }
 
-        if ($this->routeModel->update((int)$id, $data)) {
+        if ($this->routeModel->update((int) $id, $data)) {
             $_SESSION['success'] = 'Route updated successfully!';
+
+            // Save Translations
+            $translator = new \App\Services\TranslationService();
+            $languages = ['fr', 'de'];
+            $fields = ['title', 'short_description', 'full_description'];
+
+            foreach ($languages as $lang) {
+                foreach ($fields as $field) {
+                    $inputName = $lang . '_' . $field;
+                    if (!empty($_POST[$inputName])) {
+                        $translator->saveTranslation('route', (int) $id, $lang, $field, $_POST[$inputName]);
+                    }
+                }
+            }
+
         } else {
             $_SESSION['error'] = 'Failed to update route';
         }
@@ -227,7 +242,7 @@ class RouteController extends Controller
 
         $id = $_POST['id'] ?? 0;
 
-        if ($this->routeModel->delete((int)$id)) {
+        if ($this->routeModel->delete((int) $id)) {
             $_SESSION['success'] = 'Route deleted successfully!';
         } else {
             $_SESSION['error'] = 'Failed to delete route';

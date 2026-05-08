@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /check-route-type.php
+Disallow: /test-tours.php
+Disallow: /run-migration.php
+Sitemap: http://yetiroutes.test/sitemap.xml

@@ -6,78 +6,78 @@ ob_start();
 <!-- Stats Grid -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
     <!-- Total Users -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="glass-card rounded-lg p-6">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-500 text-sm">Total Users</p>
+                <p class="text-gray-600 text-sm">Total Users</p>
                 <p class="text-3xl font-bold text-gray-900"><?= $stats['total_users'] ?? 0 ?></p>
             </div>
-            <div class="bg-blue-100 rounded-full p-3">
+            <div class="bg-blue-100 bg-opacity-60 rounded-full p-3 shadow-inner">
                 <i class="fas fa-users text-blue-600 text-2xl"></i>
             </div>
         </div>
     </div>
 
     <!-- Total Routes -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="glass-card rounded-lg p-6">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-500 text-sm">Total Routes</p>
+                <p class="text-gray-600 text-sm">Total Routes</p>
                 <p class="text-3xl font-bold text-gray-900"><?= $stats['total_routes'] ?? 0 ?></p>
             </div>
-            <div class="bg-green-100 rounded-full p-3">
+            <div class="bg-green-100 bg-opacity-60 rounded-full p-3 shadow-inner">
                 <i class="fas fa-route text-green-600 text-2xl"></i>
             </div>
         </div>
     </div>
 
     <!-- Total Bookings -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="glass-card rounded-lg p-6">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-500 text-sm">Total Bookings</p>
+                <p class="text-gray-600 text-sm">Total Bookings</p>
                 <p class="text-3xl font-bold text-gray-900"><?= $stats['total_bookings'] ?? 0 ?></p>
             </div>
-            <div class="bg-purple-100 rounded-full p-3">
+            <div class="bg-purple-100 bg-opacity-60 rounded-full p-3 shadow-inner">
                 <i class="fas fa-ticket-alt text-purple-600 text-2xl"></i>
             </div>
         </div>
     </div>
 
     <!-- Pending Bookings -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="glass-card rounded-lg p-6">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-500 text-sm">Pending Bookings</p>
+                <p class="text-gray-600 text-sm">Pending Bookings</p>
                 <p class="text-3xl font-bold text-orange-600"><?= $stats['pending_bookings'] ?? 0 ?></p>
             </div>
-            <div class="bg-orange-100 rounded-full p-3">
+            <div class="bg-orange-100 bg-opacity-60 rounded-full p-3 shadow-inner">
                 <i class="fas fa-clock text-orange-600 text-2xl"></i>
             </div>
         </div>
     </div>
 
     <!-- Featured Routes -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="glass-card rounded-lg p-6">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-500 text-sm">Featured Routes</p>
+                <p class="text-gray-600 text-sm">Featured Routes</p>
                 <p class="text-3xl font-bold text-gray-900"><?= $stats['featured_routes'] ?? 0 ?></p>
             </div>
-            <div class="bg-yellow-100 rounded-full p-3">
+            <div class="bg-yellow-100 bg-opacity-60 rounded-full p-3 shadow-inner">
                 <i class="fas fa-star text-yellow-600 text-2xl"></i>
             </div>
         </div>
     </div>
 
     <!-- Blog Posts -->
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="glass-card rounded-lg p-6">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-gray-500 text-sm">Blog Posts</p>
+                <p class="text-gray-600 text-sm">Blog Posts</p>
                 <p class="text-3xl font-bold text-gray-900"><?= $stats['total_blogs'] ?? 0 ?></p>
             </div>
-            <div class="bg-indigo-100 rounded-full p-3">
+            <div class="bg-indigo-100 bg-opacity-60 rounded-full p-3 shadow-inner">
                 <i class="fas fa-blog text-indigo-600 text-2xl"></i>
             </div>
         </div>
@@ -85,26 +85,30 @@ ob_start();
 </div>
 
 <!-- Recent Bookings -->
-<div class="bg-white rounded-lg shadow">
-    <div class="px-6 py-4 border-b border-gray-200">
+<div class="glass-card rounded-lg overflow-hidden">
+    <div class="px-6 py-4 border-b border-gray-200 border-opacity-40 bg-white bg-opacity-30">
         <h3 class="text-lg font-semibold text-gray-900">Recent Bookings</h3>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full">
-            <thead class="bg-gray-50">
+            <thead class="bg-gray-50 bg-opacity-50">
                 <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Ref</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Customer</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Route</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Amount</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ref</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Route
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-200 divide-opacity-40">
                 <?php if (!empty($recent_bookings)): ?>
                     <?php foreach ($recent_bookings as $booking): ?>
-                        <tr class="hover:bg-gray-50">
+                        <tr class="hover:bg-blue-50 hover:bg-opacity-30 transition-colors">
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                 <?= htmlspecialchars($booking->booking_reference) ?>
                             </td>

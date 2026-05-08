@@ -49,7 +49,7 @@
                     </h2>
                 </a>
                 <p class="text-slate-400 text-sm leading-relaxed">
-                    Travel plans are not really an instrument themselves but a delivery mechanism or strategy for other mostly authentic Himalayan adventures.
+                    Your trusted Himalayan adventure partner since 2014. Expert guides, small groups, fair prices — we don't just show you the mountains, we share our home.
                 </p>
                 <div class="pt-4">
                      <span class="text-xs font-bold text-[#a3e635] uppercase tracking-wider mb-2 block">We are associated with</span>
@@ -71,9 +71,12 @@
                             <span class="block text-xs">+977 9810 279272</span>
                         </div>
                     </li>
-                    <li class="flex items-center gap-3">
-                        <i class="ri-mail-fill text-[#a3e635] text-lg"></i>
-                        <span class="break-all">info@yetiroutes.com</span>
+                    <li class="flex items-start gap-3">
+                        <i class="ri-mail-fill text-[#a3e635] text-lg mt-0.5"></i>
+                        <div>
+                            <a href="mailto:info@yetiroutes.com" class="block hover:text-white transition">info@yetiroutes.com</a>
+                            <a href="mailto:yetiroutes@gmail.com" class="block text-xs hover:text-white transition">yetiroutes@gmail.com</a>
+                        </div>
                     </li>
                     <li class="flex items-start gap-3">
                         <i class="ri-map-pin-fill text-[#a3e635] text-lg mt-[-2px]"></i>
@@ -85,22 +88,22 @@
             <div>
                 <h3 class="text-lg font-bold uppercase tracking-wider mb-6">Company</h3>
                 <ul class="space-y-3 text-slate-400 text-sm">
-                    <li><a href="#" class="hover:text-[#a3e635] transition">About Us</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Our Team</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Responsible Travel Policy</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Difficulty Levels</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Careers</a></li>
+                    <li><a href="/about" class="hover:text-[#a3e635] transition">About Us</a></li>
+                    <li><a href="/guides" class="hover:text-[#a3e635] transition">Our Team</a></li>
+                    <li><a href="/travel-info" class="hover:text-[#a3e635] transition">Responsible Travel</a></li>
+                    <li><a href="/travel-info#safety" class="hover:text-[#a3e635] transition">Safety & Health</a></li>
+                    <li><a href="/contact" class="hover:text-[#a3e635] transition">Contact Us</a></li>
                 </ul>
             </div>
 
             <div>
                 <h3 class="text-lg font-bold uppercase tracking-wider mb-6">Activities</h3>
                 <ul class="space-y-3 text-slate-400 text-sm">
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Everest Base Camp</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Annapurna Circuit</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Peak Climbing</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Helicopter Tours</a></li>
-                    <li><a href="#" class="hover:text-[#a3e635] transition">Reviews & Stories</a></li>
+                    <li><a href="/treks/everest" class="hover:text-[#a3e635] transition">Everest Region</a></li>
+                    <li><a href="/treks/annapurna" class="hover:text-[#a3e635] transition">Annapurna Region</a></li>
+                    <li><a href="/treks/langtang" class="hover:text-[#a3e635] transition">Langtang Region</a></li>
+                    <li><a href="/activities" class="hover:text-[#a3e635] transition">Activities</a></li>
+                    <li><a href="/blog" class="hover:text-[#a3e635] transition">Blog & Stories</a></li>
                 </ul>
             </div>
 
@@ -111,7 +114,7 @@
         <div class="container mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
             
             <div class="text-slate-500 text-sm">
-                @2025 Yeti Routes | All Rights Reserved
+                &copy; 2026 Yeti Routes | All Rights Reserved
             </div>
 
             <div class="flex items-center gap-4">

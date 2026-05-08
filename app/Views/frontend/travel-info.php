@@ -378,7 +378,7 @@ ob_start();
         <p class="text-xl text-gray-400 mb-10">Our team in Kathmandu is ready to help you plan every detail.</p>
         <div class="flex flex-col sm:flex-row justify-center gap-6">
             <a href="/contact" class="px-8 py-4 bg-white text-slate-900 rounded-full font-bold hover:scale-105 transition-transform">Contact Us</a>
-            <a href="https://wa.me/9779841234567" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
+            <a href="https://wa.me/9779843183934" class="px-8 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 transition-colors flex items-center justify-center gap-2">
                 <i class="fab fa-whatsapp"></i> Chat on WhatsApp
             </a>
         </div>
