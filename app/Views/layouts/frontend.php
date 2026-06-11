@@ -16,7 +16,40 @@
     </script>
 
     <meta name="description"
-        content="<?= $metaDescription ?? 'Experience the Himalayas with Yeti Routes - Expert guides, authentic treks, fair prices.' ?>">
+        content="<?= htmlspecialchars($metaDescription ?? 'Experience the Himalayas with Yeti Routes - Expert guides, authentic treks, fair prices.') ?>">
+
+    <?php
+    // Keep slug= param for detail pages; strip all other query params
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+    $path = strtok($requestUri, '?');
+    $slug = $_GET['slug'] ?? null;
+    $canonicalUrl = 'https://yetiroutes.com' . $path . ($slug ? '?slug=' . rawurlencode($slug) : '');
+    $ogTitle      = $pageTitle ?? 'Yeti Routes';
+    $ogDesc       = $metaDescription ?? 'Experience the Himalayas with Yeti Routes - Expert guides, authentic treks, fair prices.';
+    $ogImage      = $ogImage ?? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80';
+    $ogType       = $ogType ?? 'website';
+    ?>
+    <!-- Canonical -->
+    <link rel="canonical" href="<?= htmlspecialchars($canonicalUrl) ?>">
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="<?= htmlspecialchars($ogType) ?>">
+    <meta property="og:site_name"   content="Yeti Routes">
+    <meta property="og:title"       content="<?= htmlspecialchars($ogTitle) ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($ogDesc) ?>">
+    <meta property="og:image"       content="<?= htmlspecialchars($ogImage) ?>">
+    <meta property="og:url"         content="<?= htmlspecialchars($canonicalUrl) ?>">
+    <meta property="og:locale"      content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:site"        content="@yetiroutes">
+    <meta name="twitter:title"       content="<?= htmlspecialchars($ogTitle) ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($ogDesc) ?>">
+    <meta name="twitter:image"       content="<?= htmlspecialchars($ogImage) ?>">
+
+    <!-- Mobile theme -->
+    <meta name="theme-color" content="#0f172a">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -77,6 +110,54 @@
             transform: scale(1.05);
         }
     </style>
+
+    <?php
+    // Organization schema — rendered on every page
+    $orgSchema = [
+        '@context'  => 'https://schema.org',
+        '@type'     => 'TravelAgency',
+        'name'      => 'Yeti Routes',
+        'url'       => 'https://yetiroutes.com',
+        'logo'      => 'https://yetiroutes.com/public/images/logo.png',
+        'image'     => 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80',
+        'description' => 'Expert-guided trekking and adventure tours in Nepal. Everest, Annapurna, Langtang and more.',
+        'address'   => [
+            '@type'           => 'PostalAddress',
+            'addressLocality' => 'Kathmandu',
+            'addressCountry'  => 'NP',
+        ],
+        'contactPoint' => [
+            '@type'       => 'ContactPoint',
+            'telephone'   => '+977-984-3183934',
+            'contactType' => 'customer service',
+        ],
+        'sameAs' => [
+            'https://www.facebook.com/yetiroutes',
+            'https://www.instagram.com/yetiroutes',
+        ],
+    ];
+    // BreadcrumbList schema when breadcrumbs are passed
+    $breadcrumbSchema = null;
+    if (!empty($breadcrumbs) && is_array($breadcrumbs)) {
+        $items = [];
+        foreach ($breadcrumbs as $i => $crumb) {
+            $items[] = [
+                '@type'    => 'ListItem',
+                'position' => $i + 1,
+                'name'     => $crumb['name'],
+                'item'     => 'https://yetiroutes.com' . ($crumb['url'] ?? ''),
+            ];
+        }
+        $breadcrumbSchema = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => $items];
+    }
+    ?>
+    <script type="application/ld+json"><?= json_encode($orgSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
+    <?php if ($breadcrumbSchema): ?>
+    <script type="application/ld+json"><?= json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
+    <?php endif; ?>
+    <?php if (!empty($pageSchema)): ?>
+    <script type="application/ld+json"><?= json_encode($pageSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?></script>
+    <?php endif; ?>
 </head>
 
 <body class="bg-slate-900 text-white antialiased">

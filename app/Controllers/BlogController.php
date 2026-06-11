@@ -89,8 +89,8 @@ class BlogController extends Controller
             die("Article not found");
         }
 
-        // Get related posts
-        $relatedPosts = $this->blogModel->getRelated($post->id, $post->category, 4);
+        // Get related posts (category may be null if blog_categories not joined)
+        $relatedPosts = $this->blogModel->getRelated($post->id, $post->category ?? '', 4);
 
         $this->view('frontend.blog-article', [
             'post' => $post,

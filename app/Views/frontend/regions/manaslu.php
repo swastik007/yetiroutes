@@ -116,7 +116,7 @@ $seo = new SeoService();
                     <!-- Manaslu Circuit -->
                     <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-xl transition duration-300">
                         <h3 class="text-2xl font-bold text-purple-600 mb-4">
-                            <a href="/trek/manaslu-circuit" class="hover:text-purple-700 transition">
+                            <a href="/trek?slug=manaslu-circuit-trek" class="hover:text-purple-700 transition">
                                 Manaslu Circuit Trek
                             </a>
                         </h3>
@@ -144,7 +144,7 @@ $seo = new SeoService();
                     <!-- Tsum Valley -->
                     <div class="bg-white border border-gray-200 rounded-xl p-8 hover:shadow-xl transition duration-300">
                         <h3 class="text-2xl font-bold text-purple-600 mb-4">
-                            <a href="/trek/tsum-valley" class="hover:text-purple-700 transition">
+                            <a href="/trek?slug=tsum-valley-trek" class="hover:text-purple-700 transition">
                                 Tsum Valley Trek
                             </a>
                         </h3>
@@ -363,6 +363,9 @@ $seo = new SeoService();
                 </div>
             </div>
             <?php endif; ?>
+
+            <!-- Dynamic Route Cards -->
+            <?php include __DIR__ . '/_routes-grid.php'; ?>
 
             <!-- CTA Section -->
             <div class="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl p-8 md:p-12 text-center text-white">

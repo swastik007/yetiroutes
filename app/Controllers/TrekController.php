@@ -176,20 +176,42 @@ class TrekController extends Controller
     }
 
     /**
-     * Region-specific listing
+     * Region-specific landing page
+     * URL: /treks/everest, /treks/annapurna, /treks/langtang, /treks/manaslu
      */
     public function region(): void
     {
-        $region = $_GET['region'] ?? '';
+        // Extract region slug from URL path (e.g. /treks/everest → 'everest')
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $parts = array_filter(explode('/', $uri));
+        $region = strtolower(end($parts)); // 'everest' | 'annapurna' | 'langtang' | 'manaslu'
 
-        $filters = ['region' => $region];
-        $routes = $this->routeModel->search($filters);
+        // Map region slug to location IDs in the DB
+        $regionLocationMap = [
+            'everest'   => [3],
+            'annapurna' => [4, 10],
+            'langtang'  => [5, 11],
+            'manaslu'   => [12],
+        ];
 
-        $this->view('frontend.treks', [
-            'routes' => $routes,
-            'total_routes' => count($routes),
-            'page_title' => ucfirst($region) . ' Region Treks',
-            'filters' => $filters
-        ]);
+        $locationIds = $regionLocationMap[$region] ?? [];
+        $routes = $locationIds ? $this->routeModel->getByLocationIds($locationIds) : [];
+
+        // Load the dedicated region view; fall back to treks listing if unknown region
+        $viewFile = BASE_PATH . "/app/Views/frontend/regions/{$region}.php";
+        if (file_exists($viewFile)) {
+            $this->view("frontend.regions.{$region}", [
+                'routes'       => $routes,
+                'total_routes' => count($routes),
+                'region'       => $region,
+            ]);
+        } else {
+            $this->view('frontend.treks', [
+                'routes'       => $routes,
+                'total_routes' => count($routes),
+                'page_title'   => ucfirst($region) . ' Region Treks',
+                'filters'      => [],
+            ]);
+        }
     }
 }

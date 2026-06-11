@@ -24,7 +24,13 @@ class SitemapController extends Controller
             '/contact' => ['priority' => '0.8', 'freq' => 'monthly'],
             '/guides' => ['priority' => '0.8', 'freq' => 'monthly'],
             '/treks' => ['priority' => '0.9', 'freq' => 'weekly'],
-            '/activites' => ['priority' => '0.8', 'freq' => 'weekly'], // Assuming exists
+            '/activities' => ['priority' => '0.8', 'freq' => 'weekly'],
+            '/tours' => ['priority' => '0.8', 'freq' => 'weekly'],
+            '/trekking-in-nepal' => ['priority' => '0.9', 'freq' => 'monthly'],
+            '/treks/everest' => ['priority' => '0.9', 'freq' => 'monthly'],
+            '/treks/annapurna' => ['priority' => '0.9', 'freq' => 'monthly'],
+            '/treks/langtang' => ['priority' => '0.9', 'freq' => 'monthly'],
+            '/treks/manaslu' => ['priority' => '0.9', 'freq' => 'monthly'],
             '/blog' => ['priority' => '0.9', 'freq' => 'weekly'],
 
             // Travel Info & Subsections

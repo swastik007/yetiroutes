@@ -1,6 +1,26 @@
 <?php
 $pageTitle = htmlspecialchars($post->title) . ' - Yeti Routes Blog';
 $metaDescription = htmlspecialchars($post->meta_description ?? substr(strip_tags($post->content), 0, 160));
+$ogImage = $post->featured_image ?? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80';
+$ogType  = 'article';
+$pageSchema = [
+    '@context'         => 'https://schema.org',
+    '@type'            => 'BlogPosting',
+    'headline'         => $post->title,
+    'description'      => strip_tags($post->meta_description ?? substr(strip_tags($post->content), 0, 160)),
+    'image'            => $ogImage,
+    'url'              => 'https://yetiroutes.com/blog/article?slug=' . ($post->slug ?? ''),
+    'datePublished'    => $post->published_at ?? $post->created_at ?? date('Y-m-d'),
+    'dateModified'     => $post->updated_at ?? $post->published_at ?? date('Y-m-d'),
+    'author'           => ['@type' => 'Person', 'name' => $post->author_name ?? 'Yeti Routes'],
+    'publisher'        => ['@type' => 'Organization', 'name' => 'Yeti Routes', 'url' => 'https://yetiroutes.com'],
+    'mainEntityOfPage' => ['@type' => '@id', '@id' => 'https://yetiroutes.com/blog/article?slug=' . ($post->slug ?? '')],
+];
+$breadcrumbs = [
+    ['name' => 'Home', 'url' => '/'],
+    ['name' => 'Blog', 'url' => '/blog'],
+    ['name' => $post->title, 'url' => '/blog/article?slug=' . ($post->slug ?? '')],
+];
 ob_start();
 ?>
 
@@ -72,16 +92,16 @@ ob_start();
                 <!-- Share Buttons -->
                 <div class="flex items-center space-x-3">
                     <span class="text-gray-500">Share:</span>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode('https://yetiroutes.com/blog/' . $post->slug) ?>" target="_blank" class="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode('https://yetiroutes.com/blog/article?slug=' . $post->slug) ?>" target="_blank" class="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full flex items-center justify-center">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="https://twitter.com/intent/tweet?url=<?= urlencode('https://yetiroutes.com/blog/' . $post->slug) ?>&text=<?= urlencode($post->title) ?>" target="_blank" class="w-8 h-8 bg-blue-400 hover:bg-blue-500 text-white rounded-full flex items-center justify-center">
+                    <a href="https://twitter.com/intent/tweet?url=<?= urlencode('https://yetiroutes.com/blog/article?slug=' . $post->slug) ?>&text=<?= urlencode($post->title) ?>" target="_blank" class="w-8 h-8 bg-blue-400 hover:bg-blue-500 text-white rounded-full flex items-center justify-center">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= urlencode('https://yetiroutes.com/blog/' . $post->slug) ?>" target="_blank" class="w-8 h-8 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center">
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?= urlencode('https://yetiroutes.com/blog/article?slug=' . $post->slug) ?>" target="_blank" class="w-8 h-8 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="https://wa.me/?text=<?= urlencode($post->title . ' - https://yetiroutes.com/blog/' . $post->slug) ?>" target="_blank" class="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center">
+                    <a href="https://wa.me/?text=<?= urlencode($post->title . ' - https://yetiroutes.com/blog/article?slug=' . $post->slug) ?>" target="_blank" class="w-8 h-8 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                     <button onclick="copyToClipboard()" class="w-8 h-8 bg-gray-600 hover:bg-gray-700 text-white rounded-full flex items-center justify-center" title="Copy link">
@@ -151,9 +171,9 @@ ob_start();
                             <h2 class="text-3xl font-bold mb-6">You Might Also Like</h2>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <?php foreach (array_slice($related_posts, 0, 2) as $related): ?>
-                                    <a href="/blog/<?= htmlspecialchars($related->slug) ?>" class="group">
+                                    <a href="/blog/article?slug=<?= htmlspecialchars($related->slug) ?>" class="group">
                                         <div class="bg-white rounded-xl shadow-lg overflow-hidden hover-scale">
-                                            <img src="<?= $related->featured_image ?? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600' ?>" alt="<?= htmlspecialchars($related->title) ?>" class="w-full h-48 object-cover">
+                                            <img src="<?= $related->featured_image ?? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600' ?>" alt="<?= htmlspecialchars($related->title) ?>" loading="lazy" class="w-full h-48 object-cover">
                                             <div class="p-6">
                                                 <h3 class="font-bold text-lg mb-2 group-hover:text-blue-600"><?= htmlspecialchars($related->title) ?></h3>
                                                 <p class="text-gray-600 text-sm line-clamp-2"><?= htmlspecialchars($related->excerpt ?? $related->meta_description) ?></p>

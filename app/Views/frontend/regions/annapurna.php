@@ -32,7 +32,7 @@ $seo = new SeoService();
                 From lush rhododendron forests to high-altitude passes, the Annapurna region offers incredible diversity. Trek to base camps, cross dramatic passes, or enjoy sunrise from Poon Hill.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/trek/annapurna-base-camp" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-[#bfff4f] transition shadow-lg">
+                <a href="/trek?slug=annapurna-base-camp" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-[#bfff4f] transition shadow-lg">
                     Annapurna Base Camp Trek
                 </a>
                 <a href="/contact" class="bg-white/10 backdrop-blur text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition border-2 border-white/30">
@@ -94,7 +94,7 @@ $seo = new SeoService();
                             <div class="bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">1</div>
                             <div class="flex-1">
                                 <h3 class="text-2xl font-bold mb-2">
-                                    <a href="/trek/annapurna-base-camp" class="text-green-600 hover:text-green-800">Annapurna Base Camp Trek</a>
+                                    <a href="/trek?slug=annapurna-base-camp" class="text-green-600 hover:text-green-800">Annapurna Base Camp Trek</a>
                                 </h3>
                                 <div class="flex flex-wrap gap-3 mb-3">
                                     <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-semibold">Moderate</span>
@@ -263,6 +263,9 @@ $seo = new SeoService();
             </section>
             <?php endif; ?>
 
+            <!-- Dynamic Route Cards -->
+            <?php include __DIR__ . '/_routes-grid.php'; ?>
+
             <!-- Final CTA -->
             <section class="mb-16">
                 <div class="bg-gradient-to-br from-slate-900 to-green-900 text-white rounded-2xl shadow-lg p-12 text-center">
@@ -271,7 +274,7 @@ $seo = new SeoService();
                         From easy walks to epic adventures, let us create the perfect Annapurna trek for your fitness level and timeline.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="/trek/annapurna-base-camp" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-[#bfff4f] transition">
+                        <a href="/trek?slug=annapurna-base-camp" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-[#bfff4f] transition">
                             View ABC Trek Details
                         </a>
                         <a href="/contact" class="bg-white/10 backdrop-blur text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition border-2 border-white/30">

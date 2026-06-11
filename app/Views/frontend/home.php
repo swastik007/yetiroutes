@@ -18,16 +18,34 @@ ob_start();
 <!-- Hero Section -->
 <section class="relative w-full h-screen flex flex-col justify-center items-center text-center px-4">
 
-    <!-- Background Video with Overlay -->
-    <div class="absolute inset-0 w-full h-full -z-10 overflow-hidden">
+    <!-- Background Video/Image with Overlay -->
+    <div class="absolute inset-0 w-full h-full -z-10 overflow-hidden" id="hero-bg">
         <div class="absolute inset-0 bg-black/20 z-10"></div>
-        <video autoplay muted loop playsinline
-            poster="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070"
-            class="w-full h-full object-cover">
-            <source src="https://videos.pexels.com/video-files/4125348/4125348-hd_1920_1080_25fps.mp4" type="video/mp4">
-            <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1920" alt="Himalayas">
-        </video>
+        <!-- Poster shown immediately; video injected by JS on desktop only -->
+        <img id="hero-poster"
+             src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1920"
+             alt="Himalayan adventure"
+             class="w-full h-full object-cover">
     </div>
+    <script>
+        (function () {
+            // Skip video on mobile/tablet — saves ~25MB data and fixes iOS autoplay issues
+            if (window.innerWidth >= 1024 && !navigator.connection?.saveData) {
+                var v = document.createElement('video');
+                v.autoplay = true; v.muted = true; v.loop = true; v.playsInline = true;
+                v.className = 'w-full h-full object-cover absolute inset-0';
+                var s = document.createElement('source');
+                s.src = 'https://videos.pexels.com/video-files/4125348/4125348-hd_1920_1080_25fps.mp4';
+                s.type = 'video/mp4';
+                v.appendChild(s);
+                v.oncanplay = function () {
+                    var poster = document.getElementById('hero-poster');
+                    if (poster) poster.remove();
+                };
+                document.getElementById('hero-bg').appendChild(v);
+            }
+        })();
+    </script>
 
     <!-- Hero Content -->
     <div class="relative z-20 flex flex-col items-center gap-10 mt-16 max-w-4xl mx-auto">
@@ -367,6 +385,7 @@ ob_start();
                                     $imageUrl = "https://images.unsplash.com/{$imageId}?w=800&auto=format&fit=crop&q=80";
                                     ?>
                                     <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($route->title) ?>"
+                                        loading="lazy"
                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
 
@@ -573,6 +592,7 @@ ob_start();
                                 class="group relative h-[500px] w-[300px] md:w-[350px] flex-shrink-0 rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl transition-shadow duration-500 snap-center">
 
                                 <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($tour->title) ?>"
+                                    loading="lazy"
                                     class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
 
                                 <div class="absolute top-5 right-5 z-20">
@@ -716,6 +736,7 @@ ob_start();
             foreach ($regions as $region): ?>
                 <a href="<?= $region['url'] ?>" class="group relative h-80 rounded-2xl overflow-hidden">
                     <img src="https://images.unsplash.com/<?= $region['img'] ?>?w=400" alt="<?= $region['name'] ?>"
+                        loading="lazy"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 right-0 p-6">
@@ -822,6 +843,7 @@ ob_start();
                                 class="group relative block h-56 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500">
 
                                 <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($activity->title) ?>"
+                                    loading="lazy"
                                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
                                 <div

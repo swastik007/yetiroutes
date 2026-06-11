@@ -194,6 +194,9 @@ class Router
         // Homepage
         $this->get('/', 'HomeController', 'index');
 
+        // Pillar page
+        $this->get('/trekking-in-nepal', 'PageController', 'trekkingNepal');
+
         // Trek Listing & Detail
         $this->get('/treks', 'TrekController', 'index');
         $this->get('/tours', 'TrekController', 'tours');

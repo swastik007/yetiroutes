@@ -32,7 +32,7 @@ $seo = new SeoService();
                 Trek through the legendary Khumbu valley, home to Mount Everest, Sherpa culture, and the most iconic mountain views on Earth. From teahouses to base camps, experience the ultimate Himalayan adventure.
             </p>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="/trek/everest-base-camp" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-[#bfff4f] transition shadow-lg">
+                <a href="/trek?slug=everest-base-camp-trek" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-semibold hover:bg-[#bfff4f] transition shadow-lg">
                     Everest Base Camp Trek
                 </a>
                 <a href="/contact" class="bg-white/10 backdrop-blur text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition border-2 border-white/30">
@@ -94,7 +94,7 @@ $seo = new SeoService();
                             <div class="bg-brand-lime text-slate-900 w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">1</div>
                             <div class="flex-1">
                                 <h3 class="text-2xl font-bold mb-2">
-                                    <a href="/trek/everest-base-camp" class="text-brand-lime hover:text-[#bfff4f]">Everest Base Camp Trek</a>
+                                    <a href="/trek?slug=everest-base-camp-trek" class="text-brand-lime hover:text-[#bfff4f]">Everest Base Camp Trek</a>
                                 </h3>
                                 <div class="flex flex-wrap gap-3 mb-3">
                                     <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold">Challenging</span>
@@ -325,6 +325,9 @@ $seo = new SeoService();
             </section>
             <?php endif; ?>
 
+            <!-- Dynamic Route Cards -->
+            <?php include __DIR__ . '/_routes-grid.php'; ?>
+
             <!-- Final CTA -->
             <section class="mb-16">
                 <div class="bg-gradient-to-br from-slate-900 to-blue-900 text-white rounded-2xl shadow-lg p-12 text-center">
@@ -333,7 +336,7 @@ $seo = new SeoService();
                         Let our expert Sherpa guides create a customized Everest region trek tailored to your fitness, timeline, and dreams.
                     </p>
                     <div class="flex flex-wrap justify-center gap-4">
-                        <a href="/trek/everest-base-camp" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-[#bfff4f] transition">
+                        <a href="/trek?slug=everest-base-camp-trek" class="bg-brand-lime text-slate-900 px-8 py-4 rounded-full font-bold text-lg hover:bg-[#bfff4f] transition">
                             View EBC Trek Details
                         </a>
                         <a href="/contact" class="bg-white/10 backdrop-blur text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition border-2 border-white/30">

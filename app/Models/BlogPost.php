@@ -85,7 +85,7 @@ class BlogPost extends Model
     /**
      * Get related posts (same category)
      */
-    public function getRelated(int $postId, string $category, int $limit = 4): array
+    public function getRelated(int $postId, ?string $category, int $limit = 4): array
     {
         $sql = "SELECT bp.*,
                        u.full_name as author_name,
@@ -96,14 +96,15 @@ class BlogPost extends Model
                 LEFT JOIN media_library m ON bp.media_id = m.id
                 WHERE bp.status = 'published'
                 AND bp.id != :post_id
-                AND bc.slug = :category
+                AND (bc.slug = :category OR :category2 = '')
                 ORDER BY bp.published_at DESC
                 LIMIT :limit";
 
         return $this->query($sql, [
-            'post_id' => $postId,
-            'category' => $category,
-            'limit' => $limit
+            'post_id'   => $postId,
+            'category'  => $category ?? '',
+            'category2' => $category ?? '',
+            'limit'     => $limit,
         ]);
     }
 

@@ -114,7 +114,7 @@ ob_start();
                                 <span class="text-white/80 text-sm font-medium"><i class="far fa-clock mr-1"></i> <?= $featured->read_time ?? 5 ?> min read</span>
                             </div>
                             <h2 class="text-3xl md:text-5xl font-heading font-bold text-white mb-4 leading-tight group-hover:text-blue-200 transition-colors">
-                                <a href="/blog/<?= htmlspecialchars($featured->slug) ?>">
+                                <a href="/blog/article?slug=<?= htmlspecialchars($featured->slug) ?>">
                                     <?= htmlspecialchars($featured->title) ?>
                                 </a>
                             </h2>
@@ -141,9 +141,10 @@ ob_start();
                             $post = $posts[$i];
                         ?>
                         <article class="group flex flex-col h-full reveal bg-white p-4 rounded-3xl hover:shadow-lg transition-all duration-300 border border-transparent hover:border-gray-100">
-                            <a href="/blog/<?= htmlspecialchars($post->slug) ?>" class="block overflow-hidden rounded-2xl mb-4 shadow-sm relative">
-                                <img src="<?= $post->featured_image ?? 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80' ?>" 
-                                     alt="<?= htmlspecialchars($post->title) ?>" 
+                            <a href="/blog/article?slug=<?= htmlspecialchars($post->slug) ?>" class="block overflow-hidden rounded-2xl mb-4 shadow-sm relative">
+                                <img src="<?= $post->featured_image ?? 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80' ?>"
+                                     alt="<?= htmlspecialchars($post->title) ?>"
+                                     loading="lazy"
                                      class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
                                      
                                 <span class="absolute top-4 left-4 bg-white/90 backdrop-blur text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
@@ -158,7 +159,7 @@ ob_start();
                             </div>
 
                             <h3 class="text-xl font-heading font-bold text-slate-900 mb-3 px-2 group-hover:text-blue-600 transition-colors leading-snug">
-                                <a href="/blog/<?= htmlspecialchars($post->slug) ?>">
+                                <a href="/blog/article?slug=<?= htmlspecialchars($post->slug) ?>">
                                     <?= htmlspecialchars($post->title) ?>
                                 </a>
                             </h3>
@@ -168,7 +169,7 @@ ob_start();
                             </p>
 
                             <div class="px-2 mt-auto">
-                                <a href="/blog/<?= htmlspecialchars($post->slug) ?>" class="inline-flex items-center text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors border-b-2 border-slate-900 hover:border-blue-600 pb-0.5">
+                                <a href="/blog/article?slug=<?= htmlspecialchars($post->slug) ?>" class="inline-flex items-center text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors border-b-2 border-slate-900 hover:border-blue-600 pb-0.5">
                                     Read Story
                                 </a>
                             </div>
@@ -224,7 +225,7 @@ ob_start();
                     </h3>
                     <div class="space-y-6">
                         <?php foreach (array_slice($popular_posts, 0, 4) as $index => $popular): ?>
-                        <a href="/blog/<?= htmlspecialchars($popular->slug) ?>" class="flex gap-4 group items-start">
+                        <a href="/blog/article?slug=<?= htmlspecialchars($popular->slug) ?>" class="flex gap-4 group items-start">
                             <span class="text-3xl font-heading font-bold text-gray-100 group-hover:text-blue-100 transition-colors leading-none">0<?= $index + 1 ?></span>
                             <div>
                                 <h4 class="font-bold text-slate-900 group-hover:text-blue-600 transition-colors leading-snug mb-1 text-sm">

@@ -145,6 +145,26 @@ class Route extends Model
     }
 
     /**
+     * Get all active routes belonging to one or more location IDs
+     */
+    public function getByLocationIds(array $locationIds): array
+    {
+        if (empty($locationIds)) {
+            return [];
+        }
+        $placeholders = implode(',', array_fill(0, count($locationIds), '?'));
+        $sql = "SELECT r.*, l.name as location_name
+                FROM {$this->table} r
+                LEFT JOIN locations l ON r.location_id = l.id
+                WHERE r.location_id IN ({$placeholders}) AND r.is_active = 1
+                ORDER BY r.is_featured DESC, r.base_price ASC";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array_values($locationIds));
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
      * Get routes by type (trek, tour, expedition, day_trip)
      */
     public function getByType(string $type, int $limit = 10): array

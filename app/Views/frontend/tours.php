@@ -198,7 +198,7 @@ ob_start();
 
                                     <h3
                                         class="text-xl font-heading font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors leading-tight">
-                                        <a href="/trek/<?= htmlspecialchars($route->slug) ?>">
+                                        <a href="/trek?slug=<?= htmlspecialchars($route->slug) ?>">
                                             <?= htmlspecialchars($route->title) ?>
                                         </a>
                                     </h3>
@@ -207,7 +207,7 @@ ob_start();
                                         <?= htmlspecialchars($route->short_description) ?>
                                     </p>
 
-                                    <a href="/trek/<?= htmlspecialchars($route->slug) ?>"
+                                    <a href="/trek?slug=<?= htmlspecialchars($route->slug) ?>"
                                         class="block w-full py-3 rounded-xl border-2 border-slate-900 text-slate-900 font-bold text-center text-sm group-hover:bg-slate-900 group-hover:text-white transition-all">
                                         View Details
                                     </a>

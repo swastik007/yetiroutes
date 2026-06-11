@@ -75,4 +75,18 @@ class PageController extends Controller
             'page_title' => 'Cancellation Policy - Yeti Routes'
         ]);
     }
+
+    /**
+     * Trekking in Nepal - SEO Pillar Page
+     */
+    public function trekkingNepal(): void
+    {
+        $this->view('frontend.trekking-nepal', [
+            'page_title' => 'Trekking in Nepal - Complete Guide 2026 | Yeti Routes',
+            'breadcrumbs' => [
+                ['name' => 'Home', 'url' => '/'],
+                ['name' => 'Trekking in Nepal', 'url' => '/trekking-in-nepal'],
+            ],
+        ]);
+    }
 }

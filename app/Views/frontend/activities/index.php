@@ -108,6 +108,7 @@
                             <div class="relative h-64 overflow-hidden">
                                 <img src="<?= htmlspecialchars($imageUrl) ?>"
                                      alt="<?= htmlspecialchars($activity->title) ?>"
+                                     loading="lazy"
                                      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
 

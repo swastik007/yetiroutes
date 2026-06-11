@@ -1,9 +1,34 @@
 <?php
 $pageTitle = htmlspecialchars($route->title ?? 'Trek Detail');
 $metaDescription = htmlspecialchars($route->meta_description ?? substr($route->short_description ?? '', 0, 160));
+$ogImage = $route->featured_image_path ?? 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80';
+$ogType  = 'article';
+$isTrek  = in_array($route->route_type ?? '', ['trek', 'expedition']);
+$pageSchema = [
+    '@context'    => 'https://schema.org',
+    '@type'       => 'TouristTrip',
+    'name'        => $route->title ?? '',
+    'description' => strip_tags($route->meta_description ?? $route->short_description ?? ''),
+    'image'       => $ogImage,
+    'url'         => 'https://yetiroutes.com/trek?slug=' . ($route->slug ?? ''),
+    'touristType' => ucfirst($route->route_type ?? 'trek'),
+    'provider'    => ['@type' => 'TravelAgency', 'name' => 'Yeti Routes', 'url' => 'https://yetiroutes.com'],
+    'offers'      => [
+        '@type'         => 'Offer',
+        'price'         => $route->base_price ?? 0,
+        'priceCurrency' => 'USD',
+        'availability'  => 'https://schema.org/InStock',
+    ],
+];
+if (!empty($route->duration_days)) {
+    $pageSchema['duration'] = 'P' . $route->duration_days . 'D';
+}
+$breadcrumbs = [
+    ['name' => 'Home',  'url' => '/'],
+    ['name' => 'Treks', 'url' => '/treks'],
+    ['name' => $route->title ?? '', 'url' => '/trek?slug=' . ($route->slug ?? '')],
+];
 ob_start();
-
-$isTrek = in_array($route->route_type, ['trek', 'expedition']);
 ?>
 
 <!-- Hero Section -->
