@@ -5,7 +5,9 @@
       "Bash(php -l \"d:\\\\server\\\\yetiroutes\\\\app\\\\Views\\\\frontend\\\\regions\\\\annapurna.php\")",
       "Bash(php -l \"d:\\\\server\\\\yetiroutes\\\\app\\\\Views\\\\frontend\\\\regions\\\\langtang.php\")",
       "Bash(php -l:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(/c/laragon/bin/php/php-8.3.16-Win32-vs16-x64/php.exe d:/server/yetiroutes/Planning/blog-update-batch1.php)",
+      "Bash(/c/laragon/bin/php/php-8.3.16-Win32-vs16-x64/php.exe d:/server/yetiroutes/Planning/blog-update-batch2.php)"
     ]
   }
 }
